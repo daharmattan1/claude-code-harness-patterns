@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["assumption_under_test", "findings", "verdict"],
+  "properties": {
+    "assumption_under_test": {"type": "string", "description": "One sentence: the assumption that, if false, sinks the plan rather than needing a patch."},
+    "verdict": {"type": "string", "enum": ["APPROVED", "REVISE"], "description": "REVISE only when a finding would change what gets built. No findings is a normal result."},
+    "findings": {
+      "type": "array", "maxItems": 5, "description": "At most five, each one you failed to knock down yourself.",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["severity", "claim", "evidence", "verify", "confidence"],
+        "properties": {
+          "severity": {"type": "string", "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"], "description": "HIGH: the plan fails or loses data as written. MEDIUM: it works until a real condition breaks it. LOW: worth knowing. CRITICAL: security only."},
+          "claim": {"type": "string", "description": "The defect, phrased so it could be shown wrong."},
+          "evidence": {"type": "string", "description": "Code axis: the file:line you opened. Reasoning axis: the plan section."},
+          "verify": {"type": "string", "description": "One read-only shell command that settles the finding, or NONE."},
+          "confidence": {"type": "string", "enum": ["VERIFIED", "SPECULATIVE"], "description": "VERIFIED only if you read what you cite; otherwise SPECULATIVE."}
+        }
+      }
+    }
+  }
+}

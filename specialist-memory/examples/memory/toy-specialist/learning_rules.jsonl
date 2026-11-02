@@ -1,0 +1,2 @@
+{"id": "L1", "rule": "Flag any command that uses a tool absent from the requirements list.", "source": "seed", "confidence": "high"}
+{"id": "L2", "rule": "Flag any step that gives no observable success check.", "source": "seed", "confidence": "high"}

@@ -1,0 +1,12 @@
+# Documentation license (CC BY 4.0)
+
+## Dual license
+
+- **Code** (hooks, scripts, tests, and the skill files under `*/skills/`) is
+  licensed under the MIT License in `LICENSE`.
+- **Documentation** (the README files, the essays, `SPEC.md`, the templates, and
+  everything else written as prose) is licensed under **Creative Commons
+  Attribution 4.0 International (CC BY 4.0)**:
+  https://creativecommons.org/licenses/by/4.0/
+
+Attribution for the documentation: "claude-code-harness-patterns, by Victor Sowers."

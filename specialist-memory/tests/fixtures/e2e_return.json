@@ -1,0 +1,27 @@
+{
+ "author": "toy-specialist",
+ "run": "e2e-1",
+ "evolution_entry": "I reviewed INSTALL.md for run e2e-1 and found seven problems, mostly missing tool requirements (git, jq), missing cd steps, and no success checks. The harness refused my write to _workspace/e2e-1/findings.md because my instructions bar report files, so I returned the findings in the final message. I noticed I missed the blocking server problem on the first pass and only caught it on a second look at step 4. Next time I should check for long-running commands as a separate pass.",
+ "learning_rules": [
+  {
+   "id": "L3",
+   "rule": "Flag any step that starts a long-running process without telling the reader to keep it running and open a second terminal for later steps.",
+   "source": "e2e-1 review of INSTALL.md step 4 (python server.py blocks the terminal; step 5 has no second-terminal instruction)",
+   "confidence": "medium"
+  }
+ ],
+ "passes_to_approval": 1,
+ "first_draft_quality": null,
+ "learnings_fired": [
+  {
+   "learning_id": "L1",
+   "output_span": "`jq` is a tool the requirements never name, so the step cannot be followed on a stock machine."
+  },
+  {
+   "learning_id": "L2",
+   "output_span": "There is no success check: the reader is not told what the dashboard should look like or how to confirm it loaded."
+  }
+ ],
+ "axis_missed": [],
+ "promotion_candidates": []
+}
