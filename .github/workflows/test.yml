@@ -21,14 +21,22 @@ jobs:
         with:
           python-version: "3.12"
       - run: python -m pip install pytest
+      # macOS ships bash 3.2; the git scripts need 4.4 or later.
+      - if: runner.os == 'macOS'
+        run: brew install bash && echo "$(brew --prefix)/bin" >> "$GITHUB_PATH"
       - run: git --version && bash --version | head -1
       - name: hooks
+        if: success() || failure()
         run: python -m pytest hooks/tests -q
       - name: specialist-memory
+        if: success() || failure()
         run: python -m pytest specialist-memory/tests -q
       - name: prd-loop
+        if: success() || failure()
         run: python -m pytest prd-loop/tests -q
       - name: multi-terminal-git (safety gate)
+        if: success() || failure()
         run: python -m pytest multi-terminal-git/tests -q
       - name: multi-terminal-git (scripts)
+        if: success() || failure()
         run: bash multi-terminal-git/tests/run.sh
