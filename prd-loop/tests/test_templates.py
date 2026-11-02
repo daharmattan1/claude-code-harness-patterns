@@ -56,8 +56,21 @@ def test_headings_the_check_requires_exist_in_the_spec():
         assert h in spec, h
 
 
-@pytest.mark.skipif(shutil.which("bash") is None, reason="bash not installed")
+def find_bash():
+    # On Windows a bare "bash" can resolve to the WSL launcher in System32, which fails
+    # without a Linux distro installed. Prefer the bash that ships with Git for Windows.
+    if os.name == "nt":
+        git = shutil.which("git")
+        if git:
+            for rel in ("../bin/bash.exe", "../../bin/bash.exe"):
+                cand = os.path.normpath(os.path.join(os.path.dirname(git), rel))
+                if os.path.isfile(cand):
+                    return cand
+    return shutil.which("bash")
+
+
+@pytest.mark.skipif(find_bash() is None, reason="bash not installed")
 def test_review_script_parses():
     script = os.path.join(ROOT, "skills", "cross-model-review", "scripts", "run_review.sh")
-    res = subprocess.run(["bash", "-n", script], capture_output=True, text=True)
+    res = subprocess.run([find_bash(), "-n", script], capture_output=True, text=True)
     assert res.returncode == 0, res.stderr
